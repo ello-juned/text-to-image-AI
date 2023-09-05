@@ -8,9 +8,6 @@ const App = () => {
   const [loading, setLoading] = useState(false);
   const [log, setLog] = useState([]);
 
-  console.log("log", log);
-  console.log("imageURL", imageURL);
-
   return (
     <div className="flex h-screen w-screen bg-white">
       {/* Left Side */}
@@ -31,7 +28,7 @@ const App = () => {
         {/* Content for the right side */}
         <div className="h-full w-full flex flex-col justify-center items-center">
           {!prompt && !loading && !imageURL && (
-            <div className="text-red-500 font-bold text-center p-4 border border-red-500 rounded">
+            <div className="font-bold text-center p-4 border rounded">
               Please fill the details and click on Generate Image button.
             </div>
           )}
