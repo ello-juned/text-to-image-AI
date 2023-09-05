@@ -32,7 +32,7 @@ const App = () => {
         <div className="h-full w-full flex flex-col justify-center items-center">
           {!prompt && !loading && !imageURL && (
             <div className="text-red-500 font-bold text-center p-4 border border-red-500 rounded">
-              Please enter a prompt and continue!
+              Please fill the details and click on Generate Image button.
             </div>
           )}
 

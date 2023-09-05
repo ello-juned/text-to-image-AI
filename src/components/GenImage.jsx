@@ -90,7 +90,7 @@ const GenImage = ({
           </h1>
           <div className="mb-4">
             <label className="block text-gray-700 text-sm font-bold mb-2">
-              Prompt
+              Description
             </label>
             <textarea
               placeholder="Enter your prompt to generate the image (required)"
