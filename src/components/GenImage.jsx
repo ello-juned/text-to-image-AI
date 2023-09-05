@@ -20,7 +20,7 @@ const GenImage = ({ prompt, setPrompt, loading, setLoading, setImageURL }) => {
     };
 
     const requestBody = {
-      key: import.meta.env, // Add your API key here
+      key: import.meta.env.VITE_REACT_APP_API_KEY, // Add your API key here
       prompt: prompt,
       width: "512",
       height: "512",
@@ -142,25 +142,6 @@ const GenImage = ({ prompt, setPrompt, loading, setLoading, setImageURL }) => {
           </button>
         </form>
       </div>
-      {/* <div className="w-1/2 p-6 bg-red-500">
-        {img ? (
-          <figure>
-            <img
-              src={img}
-              alt="Generated Image"
-              className="mx-auto max-w-full"
-            />
-            <figcaption className="text-center mt-2">{promptImg}</figcaption>
-          </figure>
-        ) : (
-          <></>
-        )}
-        {loadingImg ? (
-          <progress className="w-full h-4 bg-blue-200" max="100" />
-        ) : (
-          <></>
-        )}
-      </div> */}
     </div>
   );
 };

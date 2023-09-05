@@ -37,7 +37,15 @@ const App = () => {
               alt="loader"
             />
           )}
-          {imageURL && <img src={imageURL} width={500} height={500} />}
+          {imageURL && (
+            <div className="w-full max-w-md p-6 bg-white rounded-lg shadow-md mt-4">
+              <img
+                src={imageURL}
+                alt="Generated Image"
+                className="rounded-xl shadow-xl cursor-pointer hover:scale-105 transform transition-transform duration-300"
+              />
+            </div>
+          )}
         </div>
       </div>
     </div>
