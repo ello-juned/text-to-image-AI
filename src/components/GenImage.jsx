@@ -1,62 +1,82 @@
 import { useState } from "react";
 import ErrorMessage from "./ErrorMessage";
+import axios from "axios";
 
-const GenImage = () => {
-  const [prompt, setPrompt] = useState("");
+const GenImage = ({ prompt, setPrompt, loading, setLoading, setImageURL }) => {
   const [seed, setSeed] = useState(42);
   const [guidanceScale, setGuidanceScale] = useState(7.5);
   const [numInfSteps, setNumInfSteps] = useState(10);
   const [errorMessage, setErrorMessage] = useState("");
-  const [img, setImg] = useState(null);
-  const [promptImg, setPromptImg] = useState(null);
-  const [loadingImg, setLoadingImg] = useState(false);
 
-  const cleanFormData = () => {
-    setPrompt("");
-    setSeed(42);
-    setGuidanceScale(7.5);
-    setNumInfSteps(5);
-    setLoadingImg(false);
-    setErrorMessage("");
-  };
+  const generateImage = async (e) => {
+    e.preventDefault();
+    setLoading(true);
 
-  const handleGenerateImage = async (e) => {
-    const requestOptions = {
-      method: "GET",
-      headers: { "Content-Type": "application/json" },
+    const url = "https://stablediffusionapi.com/api/v3/text2img";
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+      },
     };
 
-    setLoadingImg(true);
-    const response = await fetch(
-      `/api/generate/?prompt=${prompt}&num_inference_steps=${numInfSteps}&guidance_scale=${guidanceScale}&seed=${seed}`,
-      requestOptions
-    );
+    const requestBody = {
+      key: import.meta.env, // Add your API key here
+      prompt: prompt,
+      width: "512",
+      height: "512",
+      samples: "1",
+      num_inference_steps: "20",
+      seed: null,
+      guidance_scale: 7.5,
+      safety_checker: "yes",
+      multi_lingual: "no",
+      panorama: "no",
+      self_attention: "no",
+      upscale: "no",
+      embeddings_model: null,
+      webhook: null,
+      track_id: null,
+    };
 
-    if (!response.ok) {
-      setErrorMessage("Ooops! Something went wrong generating the image");
-    } else {
-      const imageBlob = await response.blob();
-      const imageObjectURL = URL.createObjectURL(imageBlob);
-      setImg(imageObjectURL);
-      setPromptImg(prompt);
-      cleanFormData();
+    try {
+      const response = await axios.post(url, requestBody, config);
+      console.log("response haii", response.data.output);
+      if (response.status === 200) {
+        setImageURL(response.data.output);
+        setLog((prevLog) => [
+          ...prevLog,
+          {
+            type: "success",
+            message: "Image generated successfully!",
+          },
+        ]);
+      } else {
+        console.error("API request failed");
+        setLog((prevLog) => [
+          ...prevLog,
+          {
+            type: "error",
+            message: "API request failed.",
+          },
+        ]);
+      }
+    } catch (error) {
+      console.error("Error making API request:", error);
+      setLog((prevLog) => [
+        ...prevLog,
+        {
+          type: "error",
+          message: "Error making API request.",
+        },
+      ]);
+    } finally {
+      setLoading(false);
     }
   };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    setImg(null);
-    setPromptImg(null);
-    handleGenerateImage();
-  };
-
   return (
     <div className="flex">
       <div className="w-full h-full p-6">
-        <form
-          className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4"
-          onSubmit={handleSubmit}
-        >
+        <form className="bg-white  rounded px-8 pt-6 pb-8 mb-4">
           <h1 className="text-2xl text-center font-bold mb-4">
             Generate Image with Stable Diffuser
           </h1>
@@ -110,8 +130,13 @@ const GenImage = () => {
           </div>
           <ErrorMessage message={errorMessage} />
           <button
-            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full w-full"
-            type="submit"
+            onClick={generateImage}
+            disabled={loading || !prompt}
+            className={`${
+              loading
+                ? "bg-gray-500 cursor-wait"
+                : "bg-blue-500 hover:bg-blue-600"
+            } text-white py-2 px-4 rounded-lg w-full focus:outline-none cursor-pointer`}
           >
             Generate Image
           </button>
