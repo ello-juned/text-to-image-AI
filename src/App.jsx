@@ -19,6 +19,8 @@ const App = () => {
           loading={loading}
           setLoading={setLoading}
           setImageURL={setImageURL}
+          log={log}
+          setLog={setLog}
         />
       </div>
       {/* Right Side */}
@@ -37,7 +39,7 @@ const App = () => {
               alt="loader"
             />
           )}
-          {imageURL && (
+          {imageURL && !loading && (
             <div className="w-full max-w-md p-6 bg-white rounded-lg shadow-md mt-4">
               <img
                 src={imageURL}

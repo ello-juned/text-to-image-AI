@@ -2,7 +2,15 @@ import { useState } from "react";
 import ErrorMessage from "./ErrorMessage";
 import axios from "axios";
 
-const GenImage = ({ prompt, setPrompt, loading, setLoading, setImageURL }) => {
+const GenImage = ({
+  prompt,
+  setPrompt,
+  loading,
+  setLoading,
+  setImageURL,
+  log,
+  setLog,
+}) => {
   const [seed, setSeed] = useState(42);
   const [guidanceScale, setGuidanceScale] = useState(7.5);
   const [numInfSteps, setNumInfSteps] = useState(10);
@@ -40,7 +48,6 @@ const GenImage = ({ prompt, setPrompt, loading, setLoading, setImageURL }) => {
 
     try {
       const response = await axios.post(url, requestBody, config);
-      console.log("response haii", response.data.output);
       if (response.status === 200) {
         setImageURL(response.data.output);
         setLog((prevLog) => [
