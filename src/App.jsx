@@ -8,6 +8,9 @@ const App = () => {
   const [loading, setLoading] = useState(false);
   const [log, setLog] = useState([]);
 
+  console.log("log", log);
+  console.log("imageURL", imageURL);
+
   return (
     <div className="flex h-screen w-screen bg-white">
       {/* Left Side */}

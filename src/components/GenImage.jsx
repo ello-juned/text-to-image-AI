@@ -48,6 +48,7 @@ const GenImage = ({
 
     try {
       const response = await axios.post(url, requestBody, config);
+      console.log("response", response);
       if (response.status === 200) {
         setImageURL(response.data.output);
         setLog((prevLog) => [
