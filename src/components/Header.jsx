@@ -5,7 +5,7 @@ import logo from "../assets/images/logo.jpeg";
 const Header = () => {
   const navigate = useNavigate();
   return (
-    <header className=" p-4 flex items-center justify-between shadow-xl sticky top-0 z-auto bg-white">
+    <header className=" p-2 bg-white flex items-center justify-between shadow-xl sticky top-0 z-auto">
       <div
         onClick={() => navigate("/")}
         className="flex items-center cursor-pointer"

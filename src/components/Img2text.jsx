@@ -1,11 +1,10 @@
 import { useState } from "react";
-import ErrorMessage from "./ErrorMessage";
-import axios from "axios";
 import { HfInference } from "@huggingface/inference";
 import loadingImg from "../assets/images/loading.gif";
+import { toast } from "react-toastify";
 
 const Img2text = () => {
-  const hf = new HfInference(import.meta.env.VITE_REACT_APP_API_KEY);
+  const hf = new HfInference(); // no need to pass API key
 
   const [selectedImage, setSelectedImage] = useState();
   const [loading, setLoading] = useState(false);
@@ -26,6 +25,7 @@ const Img2text = () => {
         data: selectedImage,
         model: "nlpconnect/vit-gpt2-image-captioning",
       });
+
       setGeneratedText(result.generated_text);
     } catch (error) {
       console.error("Error generating text from image:", error);
@@ -35,9 +35,9 @@ const Img2text = () => {
   };
 
   return (
-    <div className=" flex flex-row justify-center  gap-4  p-5 ">
-      <div className="w-1/2 h-[400px] ">
-        <div className=" p-6 rounded-lg shadow-lg flex flex-col justify-between">
+    <div className=" flex flex-row justify-center items-center  gap-4  p-5 ">
+      <div className="w-1/2 h-[400px]  flex flex-col justify-center ">
+        <div className=" p-6 rounded-lg   flex flex-col justify-between">
           <h2 className="text-3xl font-semibold mb-4">
             Image Caption Generator
           </h2>
@@ -56,7 +56,7 @@ const Img2text = () => {
                 : "bg-blue-500 hover:bg-blue-600"
             } text-white py-2 px-4 rounded-lg w-full focus:outline-none cursor-pointer`}
           >
-            {loading ? "Generating..." : "Generate Image"}
+            {loading ? "Generating..." : "Generate Caption"}
           </button>
         </div>
       </div>
@@ -75,7 +75,10 @@ const Img2text = () => {
                   alt=""
                   className="h-72 w-full rounded-lg border border-gray-300 transition transform hover:scale-105"
                 />
-                <h4>Generated Text : {generatedText}</h4>
+                <h4 className="mt-4 text-xl border-[1px] p-2 rounded-md">
+                  <span className="text-2xl mr-2">Generated Text:</span>
+                  {generatedText}
+                </h4>
               </div>
             ) : (
               <div className=" flex flex-col items-center justify-center bg-white bg-opacity-90 rounded-lg">
@@ -87,7 +90,8 @@ const Img2text = () => {
                   />
                 ) : (
                   <div className="text-red-500 font-bold text-center p-4 border border-red-500 rounded">
-                    Please fill the details and click on Generate Image button.
+                    Please fill the details and click on Generate Caption
+                    button.
                   </div>
                 )}
               </div>

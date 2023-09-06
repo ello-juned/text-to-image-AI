@@ -2,19 +2,21 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import { aiCards } from "../constant";
 import home from "../assets/images/home.png";
+import { toast } from "react-toastify";
 
 const Home = () => {
   const navigate = useNavigate();
 
   const onNavigateTo = (path) => {
     navigate(path);
+    toast.success(`Welcome to ${path.replace(/\//g, "")} AI`);
   };
 
   return (
     <div className="flex flex-row justify-center items-center gap-2 p-2 h-full  w-full">
       <div className="lg:w-1/2 p-6   flex flex-col gap-4">
-        <h2 class="text-4xl font-semibold mb-2">
-          <span class="bg-clip-text text-transparent bg-gradient-to-r from-pink-500 via-purple-500 to-blue-500">
+        <h2 className="text-4xl font-semibold mb-2">
+          <span className="bg-clip-text text-transparent bg-gradient-to-r from-pink-500 via-purple-500 to-blue-500">
             Free AI-powered Tools
           </span>
         </h2>

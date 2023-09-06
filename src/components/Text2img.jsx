@@ -1,22 +1,17 @@
 import { useState } from "react";
-import ErrorMessage from "./ErrorMessage";
 import axios from "axios";
 import loadingImg from "../assets/images/loading.gif";
+import { toast } from "react-toastify";
 
-const Text2img = ({
-  prompt,
-  setPrompt,
-  loading,
-  setLoading,
-  setImageURL,
-  imageURL,
-  log,
-  setLog,
-}) => {
+const Text2img = () => {
   const [seed, setSeed] = useState(42);
   const [guidanceScale, setGuidanceScale] = useState(7.5);
   const [numInfSteps, setNumInfSteps] = useState(10);
-  const [errorMessage, setErrorMessage] = useState("");
+
+  const [prompt, setPrompt] = useState();
+  const [loading, setLoading] = useState(false);
+  const [imageURL, setImageURL] = useState(null);
+  const [generatedText, setGeneratedText] = useState();
 
   const generateImage = async (e) => {
     e.preventDefault();
@@ -30,7 +25,7 @@ const Text2img = ({
     };
 
     const requestBody = {
-      key: import.meta.env.VITE_REACT_APP_API_KEY, // Add your API key here
+      key: import.meta.env.VITE_REACT_APP_TEXT_IMG, // Add your API key here
       prompt: prompt,
       width: "512",
       height: "512",
@@ -50,7 +45,7 @@ const Text2img = ({
 
     try {
       const response = await axios.post(url, requestBody, config);
-      console.log("response", response);
+      toast.warn(response.data.message);
       if (response.status === 200) {
         setImageURL(response.data.output);
         setLog((prevLog) => [
@@ -138,7 +133,6 @@ const Text2img = ({
               className="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             />
           </div>
-          <ErrorMessage message={errorMessage} />
           <button
             onClick={generateImage}
             disabled={loading || !prompt}
@@ -161,7 +155,11 @@ const Text2img = ({
             </div>
           )}
 
-          {loading && <img src={loadingImg} alt="loader" />}
+          {loading && (
+            <>
+              <img src={loadingImg} alt="loader" /> <h3>Please wait...</h3>
+            </>
+          )}
           {imageURL && !loading && (
             <div className="w-full max-w-md p-6 bg-white rounded-lg shadow-md mt-4">
               <img
