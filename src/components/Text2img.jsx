@@ -1,20 +1,17 @@
 import { useState } from "react";
-import ErrorMessage from "./ErrorMessage";
 import axios from "axios";
+import loadingImg from "../assets/images/loading.gif";
+import { toast } from "react-toastify";
 
-const GenImage = ({
-  prompt,
-  setPrompt,
-  loading,
-  setLoading,
-  setImageURL,
-  log,
-  setLog,
-}) => {
+const Text2img = () => {
   const [seed, setSeed] = useState(42);
   const [guidanceScale, setGuidanceScale] = useState(7.5);
   const [numInfSteps, setNumInfSteps] = useState(10);
-  const [errorMessage, setErrorMessage] = useState("");
+
+  const [prompt, setPrompt] = useState();
+  const [loading, setLoading] = useState(false);
+  const [imageURL, setImageURL] = useState(null);
+  const [generatedText, setGeneratedText] = useState();
 
   const generateImage = async (e) => {
     e.preventDefault();
@@ -28,7 +25,7 @@ const GenImage = ({
     };
 
     const requestBody = {
-      key: import.meta.env.VITE_REACT_APP_API_KEY, // Add your API key here
+      key: import.meta.env.VITE_REACT_APP_TEXT_IMG, // Add your API key here
       prompt: prompt,
       width: "512",
       height: "512",
@@ -48,7 +45,7 @@ const GenImage = ({
 
     try {
       const response = await axios.post(url, requestBody, config);
-      console.log("response", response);
+      toast.warn(response.data.message);
       if (response.status === 200) {
         setImageURL(response.data.output);
         setLog((prevLog) => [
@@ -82,8 +79,8 @@ const GenImage = ({
     }
   };
   return (
-    <div className="flex">
-      <div className="w-full h-full p-6">
+    <div className="flex flex-row gap-4  p-5">
+      <div className="w-1/2 h-full ">
         <form className="bg-white  rounded px-8 pt-6 pb-8 mb-4">
           <h1 className="text-xl text-center font-bold mb-4">
             Generate Image with Stable Diffuser
@@ -136,7 +133,6 @@ const GenImage = ({
               className="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             />
           </div>
-          <ErrorMessage message={errorMessage} />
           <button
             onClick={generateImage}
             disabled={loading || !prompt}
@@ -150,8 +146,33 @@ const GenImage = ({
           </button>
         </form>
       </div>
+      <div className="w-1/2  ">
+        {/* Content for the right side */}
+        <div className="h-full w-full flex flex-col justify-center items-center">
+          {!prompt && !loading && !imageURL && (
+            <div className="text-red-500 font-bold text-center p-4 border border-red-500 rounded">
+              Please fill the details and click on Generate Image button.
+            </div>
+          )}
+
+          {loading && (
+            <>
+              <img src={loadingImg} alt="loader" /> <h3>Please wait...</h3>
+            </>
+          )}
+          {imageURL && !loading && (
+            <div className="w-full max-w-md p-6 bg-white rounded-lg shadow-md mt-4">
+              <img
+                src={imageURL}
+                alt="Generated Image"
+                className="rounded-xl shadow-xl cursor-pointer hover:scale-105 transform transition-transform duration-300"
+              />
+            </div>
+          )}
+        </div>
+      </div>
     </div>
   );
 };
 
-export default GenImage;
+export default Text2img;
