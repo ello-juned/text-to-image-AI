@@ -1,6 +1,5 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import Header from "../components/Header";
 import { aiCards } from "../constant";
 
 const Home = () => {
@@ -11,39 +10,30 @@ const Home = () => {
   };
 
   return (
-    <div className="min-h-screen flex flex-col gap-2">
-      <Header />
-      {/* Top Div */}
-      <div className="flex flex-row p-2">
-        <div className="lg:w-1/2 p-6">
-          <h2 className="text-4xl font-semibold mb-2">Free AI-powered Tools</h2>
-          <p className="text-lg">
-            Let AI power your marketing efforts with these free AI tools.
-          </p>
-          <p className="text-lg">It's that simple.</p>
-        </div>
-        <div className="lg:w-1/2 flex items-center justify-center">
-          <img
-            src="https://assets-global.website-files.com/628288c5cd3e8411b90a36a4/6299887b69aae0031376bd48_620542b0aa2394087d2e47cb_cta-thumbnail.svg"
-            alt="Image"
-            className="w-full h-full object-cover"
-          />
-        </div>
+    <div className="flex flex-row justify-center items-center gap-2 p-2 h-full  w-full">
+      <div className="lg:w-1/2 p-6   flex flex-col gap-4">
+        <h2 class="text-4xl font-semibold mb-2">
+          <span class="bg-clip-text text-transparent bg-gradient-to-r from-pink-500 via-purple-500 to-blue-500">
+            Free AI-powered Tools
+          </span>
+        </h2>
+        <p className="text-lg">
+          Let AI power your marketing efforts with these free AI tools.
+        </p>
+        <p className="text-lg">It's that simple.</p>
+        <img
+          src="https://modl.ai/wp-content/themes/tweentynineteen-child/assets/images/home/home-main.png"
+          className="rounded-xl hover:border-purple-300 transition-transform transform hover:scale-105 cursor-pointer "
+        />
       </div>
-
-      {/* Bottom Div */}
-      <div className="flex-grow p-2">
-        <div className="upload-main">
-          <div className="upload-popup">
-            <img src="../images/upload-img.png" alt="" />
-          </div>
-
-          <div className="flex flex-wrap justify-center gap-2">
+      <div className=" p-2 h-full ">
+        <div className="">
+          <div className="flex flex-col w-full justify-center gap-2">
             {aiCards.map((data, index) => (
               <div
                 onClick={() => onNavigateTo(data.path)}
                 key={index}
-                className="bg-white cursor-pointer rounded-lg p-5 flex flex-row w-full lg:w-1/2 xl:w-1/3 shadow-2xl border-2 transition-transform transform hover:scale-105"
+                className="bg-white cursor-pointer rounded-lg p-5 flex flex-row w-full justify-center items-start  shadow-2xl border-2 hover:border-purple-300 transition-transform transform hover:scale-105"
               >
                 <div className="w-3/12 ">
                   <img
@@ -52,9 +42,13 @@ const Home = () => {
                     className="w-16 h-16 rounded-full"
                   />
                 </div>
-                <div className="w-full ">
-                  <div className="text-2xl font-semibold">{data.label}</div>
-                  <p className="text-base text-gray-600">{data.description}</p>
+                <div className="w-full   ml-2 ">
+                  <div className="text-2xl font-semibold bg-clip-text text-transparent bg-gradient-to-r from-pink-500 via-purple-500 to-blue-500">
+                    {data.label}
+                  </div>
+                  <p className="text-base text-gray-600 truncate">
+                    {data.description}
+                  </p>
                 </div>
               </div>
             ))}
