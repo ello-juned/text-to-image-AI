@@ -11,7 +11,7 @@ const Header = () => {
         className="flex items-center cursor-pointer"
       >
         <img src={logo} alt="Logo" className="h-16 w-16 mr-1" />
-        <h1 className=" text-xl font-semibold">Ello AI</h1>
+        <h1 className=" text-xl font-semibold">Image AI</h1>
       </div>
     </header>
   );

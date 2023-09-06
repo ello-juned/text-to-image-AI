@@ -15,15 +15,15 @@ const Home = () => {
   return (
     <div className="flex flex-row justify-center items-center gap-2 p-2 h-full  w-full">
       <div className="lg:w-1/2 p-6   flex flex-col gap-4">
-        <h2 className="text-4xl font-semibold mb-2">
+        <p className="text-lg font-semibold mb-2">
           <span className="bg-clip-text text-transparent bg-gradient-to-r from-pink-500 via-purple-500 to-blue-500">
-            Free AI-powered Tools
+            Our Image-to-Text and Text-to-Image Converter is a versatile and
+            powerful tool designed to effortlessly bridge the gap between visual
+            and textual content. Whether you need to generate valuable
+            description for images or transform text into engaging visuals, this
+            user-friendly software has you covered.{" "}
           </span>
-        </h2>
-        <p className="text-lg">
-          Let AI power your marketing efforts with these free AI tools.
         </p>
-        <p className="text-lg">It's that simple.</p>
         <div className="relative inline-block">
           <img
             src={home}

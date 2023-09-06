@@ -60,45 +60,48 @@ const Img2text = () => {
           </button>
         </div>
       </div>
-      <div className="w-1/2 p-2 flex flex-col justify-center items-center text-center  h-[600px] ">
-        {loading ? (
-          <div>
-            <img src={loadingImg} />
-            <h3>Please wait...</h3>
-          </div>
-        ) : (
-          <div className="">
-            {generatedText && !loading ? (
-              <div className=" flex flex-col items-center justify-center bg-white bg-opacity-90 rounded-lg">
-                <img
-                  src={imageURL}
-                  alt=""
-                  className="h-72 w-full rounded-lg border border-gray-300 transition transform hover:scale-105"
-                />
-                <h4 className="mt-4 text-xl border-[1px] p-2 rounded-md">
-                  <span className="text-2xl mr-2">Generated Text:</span>
-                  {generatedText}
-                </h4>
-              </div>
-            ) : (
-              <div className=" flex flex-col items-center justify-center bg-white bg-opacity-90 rounded-lg">
-                {imageURL ? (
+      {generatedText && (
+        <div className="w-1/2 p-2 flex flex-col justify-center items-center text-center  h-[600px] ">
+          {!loading && (
+            <div className="">
+              {generatedText && !loading ? (
+                <div className=" flex flex-col items-center justify-center bg-white bg-opacity-90 rounded-lg">
                   <img
                     src={imageURL}
-                    alt="imageURL"
+                    alt=""
                     className="h-72 w-full rounded-lg border border-gray-300 transition transform hover:scale-105"
                   />
-                ) : (
-                  <div className="text-red-500 font-bold text-center p-4 border border-red-500 rounded">
-                    Please fill the details and click on Generate Caption
-                    button.
-                  </div>
-                )}
-              </div>
-            )}
-          </div>
-        )}
-      </div>
+                  <h4 className="mt-4 text-xl border-[1px] p-2 rounded-md">
+                    <span className="text-2xl mr-2">Generated Text:</span>
+                    {generatedText}
+                  </h4>
+                </div>
+              ) : (
+                <div className=" flex flex-col items-center justify-center bg-white bg-opacity-90 rounded-lg">
+                  {imageURL ? (
+                    <img
+                      src={imageURL}
+                      alt="imageURL"
+                      className="h-72 w-full rounded-lg border border-gray-300 transition transform hover:scale-105"
+                    />
+                  ) : (
+                    <div className="text-red-500 font-bold text-center p-4 border border-red-500 rounded">
+                      Please fill the details and click on Generate Caption
+                      button.
+                    </div>
+                  )}
+                </div>
+              )}
+            </div>
+          )}
+        </div>
+      )}
+      {loading && (
+        <div>
+          <img src={loadingImg} />
+          <h3>Please wait...</h3>
+        </div>
+      )}
     </div>
   );
 };
