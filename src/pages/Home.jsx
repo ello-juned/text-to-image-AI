@@ -1,6 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import { aiCards } from "../constant";
+import home from "../assets/images/home.png";
 
 const Home = () => {
   const navigate = useNavigate();
@@ -21,28 +22,31 @@ const Home = () => {
           Let AI power your marketing efforts with these free AI tools.
         </p>
         <p className="text-lg">It's that simple.</p>
-        <img
-          src="https://modl.ai/wp-content/themes/tweentynineteen-child/assets/images/home/home-main.png"
-          className="rounded-xl hover:border-purple-300 transition-transform transform hover:scale-105 cursor-pointer "
-        />
+        <div className="relative inline-block">
+          <img
+            src={home}
+            alt="Image"
+            className="rounded-xl cursor-pointer animate-pop-zoom"
+          />
+        </div>
       </div>
       <div className=" p-2 h-full ">
         <div className="">
-          <div className="flex flex-col w-full justify-center gap-2">
+          <div className="flex flex-col w-full justify-center items-center gap-2 p-4">
             {aiCards.map((data, index) => (
               <div
                 onClick={() => onNavigateTo(data.path)}
                 key={index}
-                className="bg-white cursor-pointer rounded-lg p-5 flex flex-row w-full justify-center items-start  shadow-2xl border-2 hover:border-purple-300 transition-transform transform hover:scale-105"
+                className="bg-white cursor-pointer rounded-lg p-5 flex flex-row gap-2 w-full justify-center items-start  shadow-2xl border-2 hover:border-purple-300 transition-transform transform hover:scale-105"
               >
-                <div className="w-3/12 ">
+                <div className="w-2/12  flex flex-col justify-center items-center text-center ">
                   <img
                     src={data.icon}
                     alt="Icon"
                     className="w-16 h-16 rounded-full"
                   />
                 </div>
-                <div className="w-full   ml-2 ">
+                <div className="w-full    ">
                   <div className="text-2xl font-semibold bg-clip-text text-transparent bg-gradient-to-r from-pink-500 via-purple-500 to-blue-500">
                     {data.label}
                   </div>

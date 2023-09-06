@@ -1,6 +1,7 @@
 import { useState } from "react";
 import ErrorMessage from "./ErrorMessage";
 import axios from "axios";
+import loadingImg from "../assets/images/loading.gif";
 
 const Text2img = ({
   prompt,
@@ -8,6 +9,7 @@ const Text2img = ({
   loading,
   setLoading,
   setImageURL,
+  imageURL,
   log,
   setLog,
 }) => {
@@ -82,8 +84,8 @@ const Text2img = ({
     }
   };
   return (
-    <div className="flex">
-      <div className="w-full h-full p-6">
+    <div className="flex flex-row gap-4  p-5">
+      <div className="w-1/2 h-full ">
         <form className="bg-white  rounded px-8 pt-6 pb-8 mb-4">
           <h1 className="text-xl text-center font-bold mb-4">
             Generate Image with Stable Diffuser
@@ -149,6 +151,27 @@ const Text2img = ({
             Generate Image
           </button>
         </form>
+      </div>
+      <div className="w-1/2  ">
+        {/* Content for the right side */}
+        <div className="h-full w-full flex flex-col justify-center items-center">
+          {!prompt && !loading && !imageURL && (
+            <div className="text-red-500 font-bold text-center p-4 border border-red-500 rounded">
+              Please fill the details and click on Generate Image button.
+            </div>
+          )}
+
+          {loading && <img src={loadingImg} alt="loader" />}
+          {imageURL && !loading && (
+            <div className="w-full max-w-md p-6 bg-white rounded-lg shadow-md mt-4">
+              <img
+                src={imageURL}
+                alt="Generated Image"
+                className="rounded-xl shadow-xl cursor-pointer hover:scale-105 transform transition-transform duration-300"
+              />
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );

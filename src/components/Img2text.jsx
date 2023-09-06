@@ -2,6 +2,7 @@ import { useState } from "react";
 import ErrorMessage from "./ErrorMessage";
 import axios from "axios";
 import { HfInference } from "@huggingface/inference";
+import loadingImg from "../assets/images/loading.gif";
 
 const Img2text = () => {
   const hf = new HfInference(import.meta.env.VITE_REACT_APP_API_KEY);
@@ -34,9 +35,9 @@ const Img2text = () => {
   };
 
   return (
-    <div className="min-h-screen flex flex-row justify-center items-center gap-4  p-5">
-      <div className="w-1/2">
-        <div className=" p-6 rounded-lg shadow-lg flex flex-col">
+    <div className=" flex flex-row justify-center  gap-4  p-5 ">
+      <div className="w-1/2 h-[400px] ">
+        <div className=" p-6 rounded-lg shadow-lg flex flex-col justify-between">
           <h2 className="text-3xl font-semibold mb-4">
             Image Caption Generator
           </h2>
@@ -48,26 +49,26 @@ const Img2text = () => {
           />
           <button
             onClick={handleGeneratedCap}
-            disabled={!imageURL}
-            className={`py-2 px-4 rounded-lg ${
-              image
-                ? "bg-blue-500 hover:bg-blue-600 text-white"
-                : "bg-gray-300 cursor-not-allowed"
-            }`}
+            disabled={loading || !imageURL}
+            className={`${
+              loading
+                ? "bg-gray-500 cursor-wait"
+                : "bg-blue-500 hover:bg-blue-600"
+            } text-white py-2 px-4 rounded-lg w-full focus:outline-none cursor-pointer`}
           >
-            {loading ? "Generating..." : "Generate Caption"}
+            {loading ? "Generating..." : "Generate Image"}
           </button>
         </div>
       </div>
-      <div className="w-1/2 p-2 flex flex-col justify-center items-center text-center">
+      <div className="w-1/2 p-2 flex flex-col justify-center items-center text-center  h-[600px] ">
         {loading ? (
           <div>
-            <img src="https://i.pinimg.com/originals/ad/88/73/ad8873084cf7791425dacd9a784e484b.gif" />
+            <img src={loadingImg} />
             <h3>Please wait...</h3>
           </div>
         ) : (
           <div className="">
-            {generatedText ? (
+            {generatedText && !loading ? (
               <div className=" flex flex-col items-center justify-center bg-white bg-opacity-90 rounded-lg">
                 <img
                   src={imageURL}
@@ -78,12 +79,17 @@ const Img2text = () => {
               </div>
             ) : (
               <div className=" flex flex-col items-center justify-center bg-white bg-opacity-90 rounded-lg">
-                <img
-                  src="https://www.intel.com/content/dam/www/central-libraries/us/en/images/2022-09/ai-simplified-icon-gray-bkgnd.png.rendition.intel.web.576.324.png"
-                  alt=""
-                  className="h-72 w-full rounded-lg border border-gray-300 transition transform hover:scale-105"
-                />
-                <h4>Please upload an image and click on Generate Caption</h4>
+                {imageURL ? (
+                  <img
+                    src={imageURL}
+                    alt="imageURL"
+                    className="h-72 w-full rounded-lg border border-gray-300 transition transform hover:scale-105"
+                  />
+                ) : (
+                  <div className="text-red-500 font-bold text-center p-4 border border-red-500 rounded">
+                    Please fill the details and click on Generate Image button.
+                  </div>
+                )}
               </div>
             )}
           </div>
